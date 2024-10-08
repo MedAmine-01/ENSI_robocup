@@ -1,74 +1,37 @@
-#define rm1 6
-#define rm2 7
-#define lm1 8
-#define lm2 9
+#define rm1 5
+#define rm2 6
+#define lm1 9
+#define lm2 10
 
 #define ch1 2
 
+
 int duration1;
+int duration2;
+
+int stickX;
+int stickY;
 
 
 void readPulse(){
   duration1=pulseIn(ch1, HIGH);
-  if(duration1>1500){
-    duration1 = map(duration1, 1500, 2000, 0, 255);
-  }
-  else {
-     duration1 = map(duration1, 1500, 2000, 0, -255);
-  }
-  Serial.println(duration1);
-  delay(100);
+  duration2=pulseIn(ch2, HIGH);
+  stickX = map(duration1, 1000, 2000, -255, 255);
+  stickY = map(duration2, 1000, 2000, -255, 255);
 }
 
-void forward(){
-  digitalWrite(rm1, HIGH);
-  digitalWrite(rm2, LOW);
-
-  digitalWrite(lm1, HIGH);
-  digitalWrite(lm2, LOW);
-}
-
-void backward(){
-  digitalWrite(rm1, LOW);
-  digitalWrite(rm2, HIGH);
-
-  digitalWrite(lm1, LOW);
-  digitalWrite(lm2, HIGH);
-}
-
-void left(){
-  digitalWrite(rm1, HIGH);
-  digitalWrite(rm2, LOW);
-
-  digitalWrite(lm1, LOW);
-  digitalWrite(lm2, HIGH);
+void move(){
+  leftMotorPWM = stickY;          
+  rightMotorPWM = stickY;                 
+  leftMotorPWM += stickX;        
+  rightMotorPWM -= stickX;   
+  constrain()     
 }
 
 
-void right(){
-  digitalWrite(rm1, LOW);
-  digitalWrite(rm2, HIGH);
+leftMotorPWM = constrain(leftMotorPWM, 0, 255);
+rightMotorPWM = constrain(rightMotorPWM, 0, 255);
 
-  digitalWrite(lm1, HIGH);
-  digitalWrite(lm2, LOW);
-}
-
-
-void stop(){
-  digitalWrite(rm1, LOW);
-  digitalWrite(rm2, LOW);
-
-  digitalWrite(lm1, LOW);
-  digitalWrite(lm2, LOW);
-}
-
-
-void setup() {
-  // put your setup code here, to run once:
-  pinMode(rm1, OUTPUT);
-  pinMode(rm2, OUTPUT);
-  pinMode(lm1, OUTPUT);
-  pinMode(lm2, OUTPUT);
 }
 
 void loop() {
