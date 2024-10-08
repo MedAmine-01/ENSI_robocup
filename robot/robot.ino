@@ -20,19 +20,16 @@ void readPulse(){
   stickY = map(duration2, 1000, 2000, -255, 255);
 }
 
-void move(){
+void calculPWM(){
   leftMotorPWM = stickY;          
   rightMotorPWM = stickY;                 
   leftMotorPWM += stickX;        
   rightMotorPWM -= stickX;   
-  constrain()     
+  leftMotorPWM = constrain(leftMotorPWM,-255,255);
+  leftMotorPWM = constrain(leftMotorPWM,-255,255);   
 }
 
 
-leftMotorPWM = constrain(leftMotorPWM, 0, 255);
-rightMotorPWM = constrain(rightMotorPWM, 0, 255);
-
-}
 
 void loop() {
   // put your main code here, to run repeatedly:
